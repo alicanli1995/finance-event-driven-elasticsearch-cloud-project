@@ -1,0 +1,17 @@
+spring:
+  banner:
+    location: classpath:banner.txt
+
+finance-share:
+  share-list:
+    - SASA
+    - SISE
+    - TOASO
+    - EREGL
+    - AKBNK
+    - ARCLK
+    - ASELS
+    - BIMAS
+    - BRMEN
+    - DENGE
+  url-append: .E.BIST
