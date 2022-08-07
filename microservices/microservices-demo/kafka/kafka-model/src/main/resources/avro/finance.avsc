@@ -1,0 +1,57 @@
+
+{
+  "namespace": "com.microservices.demo.kafka.avro.model",
+  "type": "record",
+  "name": "FinanceAvroModel",
+  "fields": [
+    {
+      "name": "id",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "shareData",
+      "type": {
+        "name": "Share",
+        "type": "record",
+        "fields": [
+          {
+            "name": "dailyChangePercentage",
+            "type": "string"
+          },
+          {
+            "name": "dailyChange",
+            "type": "string"
+          },
+          {
+            "name": "c",
+            "type": "string"
+          },
+          {
+            "name": "last",
+            "type": "string"
+          },
+          {
+            "name": "dailyVolume",
+            "type": "string"
+          },
+          {
+            "name": "previousDayClose",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "createdAt",
+      "type": ["null", "long"],
+      "logicalType": ["null", "date"]
+    }
+  ]
+}

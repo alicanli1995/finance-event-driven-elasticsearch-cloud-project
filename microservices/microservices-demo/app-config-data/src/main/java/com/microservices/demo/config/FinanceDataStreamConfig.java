@@ -1,4 +1,4 @@
-package com.finance.stream.api.config;
+package com.microservices.demo.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "finance-share")
-public class FinanceStreamShareConfig {
+public class FinanceDataStreamConfig {
     private List<String> shareList;
     private String urlAppend;
 }
