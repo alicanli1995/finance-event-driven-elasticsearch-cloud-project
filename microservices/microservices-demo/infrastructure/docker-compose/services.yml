@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  finance-stream-service:
+    image: ${GROUP_ID}/finance.stream.api:${SERVICE_VERSION:-latest}
+    ports:
+      - "5005:5005"
+    volumes:
+      - "./docker-logs:/workspace/finance-stream-api/logs"
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xms128m -Xmx256m"
+      - "LOGGING_LEVEL_COM_MICROSERVICES_DEMO=info"
+      - "LOGGING_LEVEL_ROOT=info"
+      - "KAFKA-CONFIG_TOPIC-NAME=finance-topic"
+      - "KAFKA-CONFIG_BOOTSTRAP-SERVERS=kafka-broker-1:9092, kafka-broker-2:9092, kafka-broker-3:9092"
+      - "KAFKA-CONFIG_SCHEMA-REGISTRY-URL=http://schema-registry:8081"
+    networks:
+      - ${GLOBAL_NETWORK:-services}

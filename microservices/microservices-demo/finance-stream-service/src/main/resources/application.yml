@@ -1,46 +1,14 @@
 spring:
-  banner:
-    location: classpath:banner.txt
-
-finance-share:
-  share-list:
-    - SASA
-    - SISE
-    - TOASO
-    - EREGL
-    - AKBNK
-    - ARCLK
-    - ASELS
-    - BIMAS
-    - BRMEN
-    - DENGE
-  url-append: .E.BIST
-
-retry-config:
-  initial-interval-ms: 1000
-  max-interval-ms: 10000
-  multiplier: 2.0
-  max-attempts: 5
-  sleep-time-ms: 2000
-
-kafka-config:
-  bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
-  schema-registry-url-key: schema.registry.url
-  schema-registry-url: http://localhost:8081
-  topic-name: finance-topic
-  topic-names-to-create:
-    - finance-topic
-  num-of-partitions: 3
-  replication-factor: 3
-
-
-kafka-producer-config:
-  key-serializer-class: org.apache.kafka.common.serialization.StringSerializer
-  value-serializer-class: io.confluent.kafka.serializers.KafkaAvroSerializer
-  compression-type: snappy
-  acks: all
-  batch-size: 16384
-  batch-size-boost-factor: 100
-  linger-ms: 5
-  request-timeout-ms: 60000
-  retry-count: 5
+  application:
+    name: finance-stream-service
+  profiles:
+    active: finance_stream_service
+  cloud:
+    config:
+      name: finance-stream-service,config-client
+      uri: http://localhost:8888
+      enabled: true
+      username: spring_cloud_user
+      password: spring_cloud_password
+  config:
+    import: configserver:http://localhost:8888

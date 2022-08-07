@@ -1,0 +1,23 @@
+spring:
+  security:
+    user:
+      name: spring_cloud_user
+      password: spring_cloud_password
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: <%= git.uri %>
+          username: <your-username>
+          password: <your-password>
+          clone-on-start: true
+          default-label: main
+      fail-fast: true
+server:
+  port: 8888
+logging:
+  level:
+    ROOT: INFO
+    org.spring.framework.cloud.config: DEBUG

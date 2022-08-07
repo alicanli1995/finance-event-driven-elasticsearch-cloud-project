@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="DEV_HOME" value="./config-server/logs"/>
+    <property name="APP_NAME" value="config-server"/>
+
+    <include resource="logback-common.xml"/>
+
+</configuration>
