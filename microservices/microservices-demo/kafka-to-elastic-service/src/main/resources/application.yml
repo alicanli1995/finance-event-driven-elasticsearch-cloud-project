@@ -1,8 +1,8 @@
 spring:
   application:
-    name: finance-stream-service
+    name: kafka-to-elastic-service
   profiles:
-    active: finance_stream_service
+    active: kafka_to_elastic
   cloud:
     config:
       name: finance-stream-service,config-client

@@ -1,27 +1,5 @@
-spring:
-  banner:
-    location: classpath:banner.txt
-
-finance-share:
-  share-list:
-    - SASA
-    - SISE
-    - TOASO
-    - EREGL
-    - AKBNK
-    - ARCLK
-    - ASELS
-    - BIMAS
-    - BRMEN
-    - DENGE
-  url-append: .E.BIST
-
-retry-config:
-  initial-interval-ms: 1000
-  max-interval-ms: 10000
-  multiplier: 2.0
-  max-attempts: 5
-  sleep-time-ms: 2000
+server:
+  port: 8182
 
 kafka-config:
   bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
@@ -30,25 +8,11 @@ kafka-config:
   topic-name: finance-topic
   topic-names-to-create:
     - finance-topic
-  num-of-partitions: 3
-  replication-factor: 3
-
-
-kafka-producer-config:
-  key-serializer-class: org.apache.kafka.common.serialization.StringSerializer
-  value-serializer-class: io.confluent.kafka.serializers.KafkaAvroSerializer
-  compression-type: snappy
-  acks: all
-  batch-size: 16384
-  batch-size-boost-factor: 100
-  linger-ms: 5
-  request-timeout-ms: 60000
-  retry-count: 5
 
 kafka-consumer-config:
   key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
-  consumer-group-id: twitter-topic-consumer
+  consumer-group-id: finance-topic-consumer
   auto-offset-reset: earliest
   specific-avro-reader-key: specific.avro.reader
   specific-avro-reader: true

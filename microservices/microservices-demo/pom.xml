@@ -24,6 +24,8 @@
         <module>kafka/kafka-model</module>
         <module>kafka/kafka-producer</module>
         <module>config-server</module>
+        <module>kafka-consumer</module>
+        <module>kafka-to-elastic-service</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -59,6 +61,12 @@
                 <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.microservices.demo</groupId>
+                <artifactId>kafka-consumer</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
