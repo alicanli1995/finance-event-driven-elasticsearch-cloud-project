@@ -16,13 +16,6 @@ finance-share:
     - DENGE
   url-append: .E.BIST
 
-retry-config:
-  initial-interval-ms: 1000
-  max-interval-ms: 10000
-  multiplier: 2.0
-  max-attempts: 5
-  sleep-time-ms: 2000
-
 kafka-config:
   bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
   schema-registry-url-key: schema.registry.url
