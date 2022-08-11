@@ -18,12 +18,12 @@ import java.util.Objects;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableElasticsearchRepositories(basePackages = "com.microservices.demo.elastic.index.client.repository")
+@EnableElasticsearchRepositories(basePackages = "com.microservices.demo.elastic")
 public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
     private final ElasticConfigData elasticConfigData;
 
-    @Override
     @Bean
+    @Override
     public RestHighLevelClient elasticsearchClient() {
         UriComponents serverUri = UriComponentsBuilder.fromHttpUrl(elasticConfigData.getConnectionUrl()).build();
         return new RestHighLevelClient(

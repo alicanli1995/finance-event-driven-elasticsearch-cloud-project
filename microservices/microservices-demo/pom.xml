@@ -30,6 +30,8 @@
         <module>elastic/elastic-config</module>
         <module>elastic/elastic-model</module>
         <module>elastic/elastic-index-client</module>
+        <module>elastic/elastic-query-client</module>
+        <module>common-util</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -79,6 +81,14 @@
                 <artifactId>elastic-model</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+
+            <dependency>
+                <groupId>com.microservices.demo</groupId>
+                <artifactId>common-util</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>com.microservices.demo</groupId>
