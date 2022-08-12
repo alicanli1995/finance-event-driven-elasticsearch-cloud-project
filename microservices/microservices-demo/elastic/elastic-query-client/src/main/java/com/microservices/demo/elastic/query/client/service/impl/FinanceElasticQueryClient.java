@@ -39,8 +39,8 @@ public class FinanceElasticQueryClient implements ElasticQueryClient<FinanceInde
     }
 
     @Override
-    public List<FinanceIndexModel> getIndexModelByFieldShareData(String shareData) {
-        var query = elasticQueryUtil.getSearchQueryByFieldShareData(elasticQueryConfigData.getShareData(), shareData);
+    public List<FinanceIndexModel> getIndexModelByFieldShareData(String c) {
+        var query = elasticQueryUtil.getSearchQueryByFieldShareData(elasticQueryConfigData.getShareData(), c);
         var searchResult = elasticsearchOperations.search(query, FinanceIndexModel.class,
                 IndexCoordinates.of(elasticConfigData.getIndexName()));
         return searchResult.get().map(SearchHit::getContent).toList();

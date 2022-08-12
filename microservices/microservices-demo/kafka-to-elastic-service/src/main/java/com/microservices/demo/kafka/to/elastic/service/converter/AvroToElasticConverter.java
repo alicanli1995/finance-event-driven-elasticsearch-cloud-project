@@ -1,6 +1,7 @@
 package com.microservices.demo.kafka.to.elastic.service.converter;
 
 import com.microservices.demo.elastic.model.index.impl.FinanceIndexModel;
+import com.microservices.demo.elastic.model.index.model.FinanceAvroDTO;
 import com.microservices.demo.kafka.avro.model.FinanceAvroModel;
 import org.springframework.stereotype.Component;
 
@@ -15,17 +16,22 @@ public class AvroToElasticConverter {
     public List<FinanceIndexModel> getElasticModels(List<FinanceAvroModel> avroModels){
 
         return avroModels.stream()
-                .map(avroModel -> {
-                            String text = "Share Name :".concat(avroModel.getShareData().getC()) +
-                                    " Share Last Volume : " + avroModel.getShareData().getLast();
-                            return FinanceIndexModel
-                                    .builder()
-                                    .id(avroModel.getId())
-                                    .shareData(text)
-                                    .createdAt(ZonedDateTime.ofInstant(Instant.ofEpochMilli(avroModel.getCreatedAt()),
-                                            ZoneId.systemDefault()))
-                                    .build();
-                        }
+                .map(avroModel -> FinanceIndexModel
+                        .builder()
+                        .id(avroModel.getId())
+                        .shareData(FinanceAvroDTO
+                                .builder()
+                                .c(avroModel.getShareData().getC())
+                                .dailyChangePercentage(avroModel.getShareData().getDailyChangePercentage())
+                                .dailyVolume(avroModel.getShareData().getDailyVolume())
+                                .description(avroModel.getShareData().getDescription())
+                                .dailyChange(avroModel.getShareData().getDailyChange())
+                                .previousDayClose(avroModel.getShareData().getPreviousDayClose())
+                                .last(avroModel.getShareData().getLast())
+                                .build())
+                        .createdAt(ZonedDateTime.ofInstant(Instant.ofEpochMilli(avroModel.getCreatedAt()),
+                                ZoneId.systemDefault()))
+                        .build()
                 ).toList();
     }
 

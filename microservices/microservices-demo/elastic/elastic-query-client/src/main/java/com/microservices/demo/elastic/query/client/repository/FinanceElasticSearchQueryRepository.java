@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface FinanceElasticSearchQueryRepository extends ElasticsearchRepository<FinanceIndexModel,String > {
-
-    List<FinanceIndexModel> findByShareData(String shareData);
+    List<FinanceIndexModel> findByShareDataCIn(String c);
 
 }

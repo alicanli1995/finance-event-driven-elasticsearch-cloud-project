@@ -19,8 +19,6 @@ public class FinanceElasticRepositoryQueryClient implements ElasticQueryClient<F
 
     private final FinanceElasticSearchQueryRepository financeElasticSearchQueryRepository;
 
-
-
     @Override
     public FinanceIndexModel getIndexModelById(String id) {
         return financeElasticSearchQueryRepository.findById(id)
@@ -29,7 +27,7 @@ public class FinanceElasticRepositoryQueryClient implements ElasticQueryClient<F
 
     @Override
     public List<FinanceIndexModel> getIndexModelByFieldShareData(String field) {
-        return financeElasticSearchQueryRepository.findByShareData(field);
+        return financeElasticSearchQueryRepository.findByShareDataCIn(field);
     }
 
     @Override
