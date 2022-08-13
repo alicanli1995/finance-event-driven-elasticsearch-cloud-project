@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "d35893ce-f55f-41d5-a03d-c66ad3415ce9",
+		"name": "Finance-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "18925730"
+	},
+	"item": [
+		{
+			"name": "BIST Index Create",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"mappings\": {\r\n        \"properties\": {\r\n            \"id\": {\r\n                \"type\": \"text\",\r\n                \"fields\": {\r\n                    \"keyword\": {\r\n                        \"type\": \"keyword\",\r\n                        \"ignore_above\": 256\r\n                    }\r\n                }\r\n            },\r\n            \"createdAt\": {\r\n                \"type\": \"date\",\r\n\t\t\t\t\"format\": \"yyyy-MM-dd'T'HH:mm:ssZZ\"\r\n\t\t\t},\r\n\t\t\t\"shareData\": {\r\n\t\t\t\t\"properties\": {\r\n\t\t\t\t\t\"dailyChangePercentage\": { \"type\": \"text\" },\r\n\t\t\t\t\t\"dailyChange\":  { \"type\": \"text\" },\t\t\t\t\t\r\n\t\t\t\t\t\"c\": { \"type\": \"text\" },\r\n\t\t\t\t\t\"last\":  { \"type\": \"text\" },\r\n\t\t\t\t\t\"dailyVolume\":  { \"type\": \"text\" },\r\n\t\t\t\t\t\"previousDayClose\":  { \"type\": \"text\" },\r\n\t\t\t\t\t\"description\":  { \"type\": \"text\" }\r\n\t\t\t\t}\r\n\t\t\t}\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9200/bist-index"
+			},
+			"response": []
+		},
+		{
+			"name": "Elastic Post Document Sample",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"f8a1c36f-0d1e-4da1-8884-d65344b7b26c\",\r\n    \"createdAt\" : \"2022-08-09T11:11:11+0000\",\r\n    \"shareData\" : {\r\n        \"dailyChangePercentage\" : \"1.21\",\r\n        \"dailyChange\" : \"1.0\" , \r\n        \"c\" : \"TOASO.E.BIST\",\r\n        \"last\" : \"83\",\r\n        \"dailyVolume\" : \"3.057912547E8\",\r\n        \"previousDayClose\" : \"82\",\r\n        \"description\": \"TOFAS OTO. FAB.\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9200/bist-index/_doc/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Elastic Search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9200/bist-index/_search"
+			},
+			"response": []
+		},
+		{
+			"name": "Elastic Query Service Search With All Or ID",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "password",
+						"username": "user"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8183/elastic-query-service/documents"
+			},
+			"response": []
+		},
+		{
+			"name": "Elastic Query Service Search With Share Name",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "password",
+						"username": "user"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"shareData\":\r\n    {\r\n        \"c\" : \"SASA.E.BIST\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8183/elastic-query-service/documents/AKBNK"
+			},
+			"response": []
+		}
+	]
+}
