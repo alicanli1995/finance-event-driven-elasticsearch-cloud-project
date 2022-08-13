@@ -1,0 +1,30 @@
+server:
+  port: 8183
+  servlet:
+    context-path: /elastic-query-service
+    
+elastic-query-config:
+  text-field: shareData.c
+  
+elastic-query-service:
+  version: v1
+
+user-config:
+  username: user
+  password: password
+  roles: "USER"
+
+elastic-config:
+  index-name: bist-index
+  connection-url: http://localhost:9200
+  connect-timeout-ms: 5000
+  socket-timeout-ms: 30000
+  
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+security:
+  paths-to-ignore: /api-docs

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,8 @@ import java.util.List;
 public class ElasticDocumentController {
 
     private final ElasticQueryService elasticQueryService;
+    @Value("${server.port}")
+    private String serverPort;
 
     @Operation(summary = "Search documents in Elasticsearch on All Documents",
             description = "Search documents in Elasticsearch on All Documents")
@@ -73,12 +76,13 @@ public class ElasticDocumentController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @ResponseBody
-    @PostMapping("/{shareData}")
+    @PostMapping("/get-document-by-text")
     public ResponseEntity<List<ElasticQueryResponseModel>> getDocumentsByShareData(
             @RequestBody ElasticQueryRequestModel elasticQueryRequestModel){
         List<ElasticQueryResponseModel> response =
                 elasticQueryService.getDocumentsByShareData(elasticQueryRequestModel.getShareData().getC());
         log.info("Elasticsearch returned {} of documents", response.size());
+        log.info("This information retrieving from {}", serverPort);
         return ResponseEntity.ok(response);
     }
 

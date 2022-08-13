@@ -27,6 +27,7 @@ public class FinanceElasticRepositoryQueryClient implements ElasticQueryClient<F
 
     @Override
     public List<FinanceIndexModel> getIndexModelByFieldShareData(String field) {
+        log.info("Elasticsearch query for documents with share data: ".concat(field));
         return financeElasticSearchQueryRepository.findByShareDataCIn(field);
     }
 

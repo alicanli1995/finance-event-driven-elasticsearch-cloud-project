@@ -17,7 +17,7 @@ kafka-consumer-config:
   specific-avro-reader-key: specific.avro.reader
   specific-avro-reader: true
   batch-listener: true
-  auto-startup: false
+  auto-startup: true
   concurrency-level: 3
   session-timeout-ms: 10000
   heartbeat-interval-ms: 3000
@@ -35,8 +35,9 @@ retry-config:
   sleep-time-ms: 2000
 
 elastic-config:
-  index-name: finance-index
+  index-name: bist-index
   connection-url: http://localhost:9200
   connect-timeout-ms: 5000
   socket-timeout-ms: 30000
   is-repository: true
+
