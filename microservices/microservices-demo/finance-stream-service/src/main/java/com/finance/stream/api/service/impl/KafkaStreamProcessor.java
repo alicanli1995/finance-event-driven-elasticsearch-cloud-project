@@ -33,6 +33,5 @@ public class KafkaStreamProcessor implements ProcessData {
 
         kafkaProducer.send(kafkaConfigData.getTopicName(), financeAvroModel.getId(), financeAvroModel);
 
-
     }
 }

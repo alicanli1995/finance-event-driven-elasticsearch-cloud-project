@@ -13,8 +13,8 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.time.ZonedDateTime;
 
-@Builder
 @Data
+@Builder
 @Document(indexName = "#{@elasticConfigData.indexName}")
 public class FinanceIndexModel implements IndexModel {
 
@@ -29,5 +29,11 @@ public class FinanceIndexModel implements IndexModel {
     @JsonProperty
     private ZonedDateTime createdAt;
 
+    public FinanceAvroDTO getShareData() {
+        return shareData;
+    }
 
+    public void setShareData(FinanceAvroDTO shareData) {
+        this.shareData = shareData;
+    }
 }

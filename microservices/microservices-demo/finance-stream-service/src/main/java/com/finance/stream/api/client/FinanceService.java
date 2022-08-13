@@ -11,6 +11,6 @@ import java.util.List;
              url = "https://www.isyatirim.com.tr/_layouts/15/Isyatirim.Website/Common/Data.aspx/OneEndeks?endeks=")
 public interface FinanceService {
 
-    @GetMapping()
+    @GetMapping
     List<FinanceApiDTO> getBISTInformation(@RequestParam String endeks);
 }

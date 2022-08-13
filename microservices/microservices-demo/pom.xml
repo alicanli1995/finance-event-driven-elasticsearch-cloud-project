@@ -34,6 +34,10 @@
         <module>common-util</module>
         <module>elastic-query-service</module>
         <module>elastic-query-web-client</module>
+        <module>elastic-query-service-common</module>
+        <module>elastic-query-web-client-common</module>
+        <module>elastic-query-service-reactive</module>
+        <module>elastic-query-web-client-reactive</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -63,6 +67,18 @@
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro</artifactId>
                 <version>${avro.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.microservices.demo</groupId>
+                <artifactId>elastic-query-service-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.microservices.demo</groupId>
+                <artifactId>elastic-query-web-client-common</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>

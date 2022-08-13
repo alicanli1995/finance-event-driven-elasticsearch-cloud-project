@@ -2,7 +2,7 @@ package com.microservices.demo.elastic.query.service.service.impl;
 
 import com.microservices.demo.elastic.model.index.impl.FinanceIndexModel;
 import com.microservices.demo.elastic.query.client.service.ElasticQueryClient;
-import com.microservices.demo.elastic.query.service.model.ElasticQueryResponseModel;
+import com.microservices.demo.elastic.query.service.common.model.ElasticQueryResponseModel;
 import com.microservices.demo.elastic.query.service.model.assemblr.ElasticQueryResponseModelAssembler;
 import com.microservices.demo.elastic.query.service.service.ElasticQueryService;
 import lombok.RequiredArgsConstructor;

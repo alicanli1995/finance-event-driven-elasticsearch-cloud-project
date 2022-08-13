@@ -12,9 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaStreamInitializer implements StreamInitializer {
 
-    private final KafkaConfigData kafkaConfigData;
     private final KafkaAdminClient kafkaAdminClient;
-
 
     @Override
     public void init() {

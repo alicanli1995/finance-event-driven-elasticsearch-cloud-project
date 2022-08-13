@@ -1,9 +1,9 @@
 package com.microservices.demo.elastic.query.service.model.assemblr;
 
 import com.microservices.demo.elastic.model.index.impl.FinanceIndexModel;
-import com.microservices.demo.elastic.query.service.config.ElasticToResponseModelConverter;
+import com.microservices.demo.elastic.query.service.common.converter.ElasticToResponseModelConverter;
+import com.microservices.demo.elastic.query.service.common.model.ElasticQueryResponseModel;
 import com.microservices.demo.elastic.query.service.controller.ElasticDocumentController;
-import com.microservices.demo.elastic.query.service.model.ElasticQueryResponseModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package com.microservices.demo.elastic.query.web.client.controller;
 
-import com.microservices.demo.elastic.query.web.client.model.ElasticQueryWebClientRequestModel;
-import com.microservices.demo.elastic.query.web.client.model.ElasticQueryWebClientResponseModel;
+import com.microservices.demo.elastic.query.web.client.common.model.ElasticQueryWebClientRequestModel;
+import com.microservices.demo.elastic.query.web.client.common.model.ElasticQueryWebClientResponseModel;
 import com.microservices.demo.elastic.query.web.client.service.ElasticQueryWebClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +25,6 @@ import java.util.List;
 public class QueryController {
 
     private final ElasticQueryWebClientService elasticQueryWebClientService;
-
-
 
     @GetMapping("")
     public String index() {

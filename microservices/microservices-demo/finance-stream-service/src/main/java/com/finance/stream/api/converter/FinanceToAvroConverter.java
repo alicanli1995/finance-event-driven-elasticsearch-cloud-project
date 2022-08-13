@@ -16,7 +16,7 @@ public class FinanceToAvroConverter {
                 .setId(UUID.randomUUID().toString())
                 .setCreatedAt(new Date().getTime())
                 .setShareData(Share.newBuilder()
-                        .setC(finance.c())
+                        .setC(finance.c().substring(0, finance.c().indexOf(".")))
                         .setDailyChange(finance.dailyChange())
                         .setDescription(finance.description())
                         .setLast(finance.last())
