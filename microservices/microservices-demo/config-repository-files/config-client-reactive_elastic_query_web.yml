@@ -1,0 +1,26 @@
+elastic-query-web-client:
+  webclient:
+    connect-timeout-ms: 10000
+    read-timeout-ms: 10000
+    write-timeout-ms: 10000
+    max-in-memory-size: 10485760 # 10MB
+    content-type: 'application/json'
+    accept-type: 'text/event-stream'
+    base-url: 'http://localhost:8183/reactive-elastic-query-service/documents'
+  query-by-text:
+    method: POST
+    uri: "/get-doc-by-text"
+    accept: ${elastic-query-web-client.webclient.accept-type}
+
+server:
+  port: 8184
+
+spring:
+  webflux:
+    base-path: /reactive-elastic-query-web-client
+  thymeleaf:
+    cache: false
+    reactive:
+      max-chunk-size: 8192
+  codec:
+    max-in-memory-size: 25MB
