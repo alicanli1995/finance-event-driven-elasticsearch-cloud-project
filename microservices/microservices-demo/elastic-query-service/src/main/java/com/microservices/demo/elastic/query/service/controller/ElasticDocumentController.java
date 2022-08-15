@@ -12,17 +12,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Slf4j
 @Validated
-@CrossOrigin
-@RequestScope
+@PreAuthorize("isAuthenticated()")
 @RestController
 @RequestMapping(value = "/documents")
 @RequiredArgsConstructor
@@ -76,6 +75,7 @@ public class ElasticDocumentController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @ResponseBody
+    @PreAuthorize("hasRole('APP_USER_ROLE') || hasAuthority('SCOPE_APP_USER_ROLE')")
     @PostMapping("/get-document-by-text")
     public ResponseEntity<List<ElasticQueryResponseModel>> getDocumentsByShareData(
             @RequestBody ElasticQueryRequestModel elasticQueryRequestModel){

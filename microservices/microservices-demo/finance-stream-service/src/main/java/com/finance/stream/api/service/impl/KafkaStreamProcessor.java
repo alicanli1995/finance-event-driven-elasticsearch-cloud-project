@@ -24,10 +24,6 @@ public class KafkaStreamProcessor implements ProcessData {
     @Override
     public void processData(List<FinanceApiDTO> financeApiDTOs) {
 
-        log.info("Received data from finance api, and sending kafka topic: {} , data is : {}",
-                kafkaConfigData.getTopicName(),
-                financeApiDTOs.get(0));
-
         var financeAvroModel =
                 financeToAvroConverter.getFinanceAvroModel(financeApiDTOs.get(0));
 

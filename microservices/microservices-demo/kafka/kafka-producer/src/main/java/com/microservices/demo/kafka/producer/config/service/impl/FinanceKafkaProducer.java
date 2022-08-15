@@ -24,11 +24,8 @@ public class FinanceKafkaProducer implements KafkaProducer<String, FinanceAvroMo
     @Override
     public void send(String topic, String key, FinanceAvroModel message) {
         log.info("Sending message='{}' to topic='{}' with key='{}'", message, topic, key);
-        var result =
-                kafkaTemplate.send(topic, key, message);
+        var result = kafkaTemplate.send(topic, key, message);
         addCallback(topic, key, message, result);
-
-
     }
 
     @PreDestroy
@@ -39,8 +36,11 @@ public class FinanceKafkaProducer implements KafkaProducer<String, FinanceAvroMo
         }
     }
 
-    private static void addCallback(String topic, String key, FinanceAvroModel message, ListenableFuture<SendResult<String, FinanceAvroModel>> result) {
-        result.addCallback(new ListenableFutureCallback<SendResult<String, FinanceAvroModel>>() {
+    private static void addCallback(String topic,
+                                    String key,
+                                    FinanceAvroModel message,
+                                    ListenableFuture<SendResult<String, FinanceAvroModel>> result) {
+        result.addCallback(new ListenableFutureCallback<>() {
             @Override
             public void onFailure(Throwable ex) {
                 log.error("Error sending message='{}' to topic='{}' with key='{}'", message, topic, key, ex);
