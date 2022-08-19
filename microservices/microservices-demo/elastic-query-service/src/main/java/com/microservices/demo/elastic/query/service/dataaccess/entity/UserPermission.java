@@ -18,8 +18,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserPermission {
 
-    @NotNull
     @Id
+    @NotNull
     private UUID id;
 
     @NotNull

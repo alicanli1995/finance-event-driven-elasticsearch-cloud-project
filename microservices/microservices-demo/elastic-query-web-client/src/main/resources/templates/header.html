@@ -27,7 +27,7 @@
 
         <div class="row">
             <div class="col-12" th:if="${#authorization.expression('isAuthenticated()')}">
-                <p class="text-light bg-dark float-right">Welcome, <span th:text="${#authentication.principal.username}"/>!</p>
+                <p class="text-light bg-dark float-right">Welcome, <span th:text="${#authentication.principal.fullName}"/>!</p>
             </div>
             <form class="col-12" method="post" th:action="@{/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />

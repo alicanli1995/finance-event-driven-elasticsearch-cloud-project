@@ -1,0 +1,48 @@
+kafka-streams-service:
+  custom-audience: kafka-streams-service
+
+server:
+  port: 8187
+  servlet:
+    context-path: /kafka-streams-service
+
+spring:
+  banner:
+    location: classpath:banner.txt
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9091/auth/realms/microservices-realm
+          jwk-set-uri: http://localhost:9091/auth/realms/microservices-realm/protocol/openid-connect/certs
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+security:
+  paths-to-ignore: /api-docs
+
+retry-config:
+  initial-interval-ms: 1000
+  max-interval-ms: 10000
+  multiplier: 2.0
+  maxAttempts: 3
+  sleep-time-ms: 2000
+
+kafka-config:
+  bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
+  schema-registry-url-key: schema.registry.url
+  schema-registry-url: http://localhost:8081
+  topic-names-to-create:
+    - finance-topic
+    - finance-analytics-topic
+
+kafka-streams-config:
+  application-id: finance-streams-application
+  input-topic-name: finance-topic
+  output-topic-name: finance-analytics-topic
+  state-file-location: ${HOME}/kafka-streaming-state
+  word-count-store-name: word-count-store

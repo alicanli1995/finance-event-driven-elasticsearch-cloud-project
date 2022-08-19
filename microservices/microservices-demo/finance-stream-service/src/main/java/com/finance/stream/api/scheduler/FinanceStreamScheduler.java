@@ -16,8 +16,9 @@ public class FinanceStreamScheduler {
     private final FinanceDataStreamConfig financeDataStreamConfig;
     private final ProcessData processData;
 
-    @Scheduled( cron = "0/20 * 10-18  * * MON-FRI",
-                zone = "Europe/Istanbul")
+//    @Scheduled( cron = "0/20 * 10-18  * * MON-FRI",
+//                zone = "Europe/Istanbul")
+    @Scheduled(fixedDelay = 20000)
     public void getBistInformation() {
         financeDataStreamConfig
                 .getShareList()

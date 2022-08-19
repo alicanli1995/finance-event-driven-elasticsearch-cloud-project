@@ -1,0 +1,9 @@
+{"namespace": "com.microservices.demo.kafka.avro.model",
+  "type": "record",
+  "name": "FinanceAnalyticsAvroModel",
+  "fields": [
+    {"name": "share", "type": ["null", "string"]},
+    {"name": "shareVolume", "type": ["null", "string"]},
+    {"name": "createdAt", "type": ["null", "long"], "logicalType": ["null", "date"]}
+  ]
+}

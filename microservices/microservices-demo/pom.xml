@@ -38,6 +38,7 @@
         <module>elastic-query-web-client-common</module>
         <module>elastic-query-service-reactive</module>
         <module>elastic-query-web-client-reactive</module>
+        <module>kafka-streams-service</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -56,12 +57,34 @@
         <cloud-starter-config.version>3.1.3</cloud-starter-config.version>
         <elastic.version>7.17.4</elastic.version>
         <open-api.version>1.6.8</open-api.version>
+        <kafka-streams.version>2.6.0</kafka-streams.version>
+        <kafka-clients.version>2.6.0</kafka-clients.version>
+        <kafka-avro-serializer.version>5.5.1</kafka-avro-serializer.version>
+        <kafka-streams-avro-serde.version>5.5.1</kafka-streams-avro-serde.version>
     </properties>
 
 
     <dependencyManagement>
 
         <dependencies>
+            <dependency>
+                <groupId>io.confluent</groupId>
+                <artifactId>kafka-streams-avro-serde</artifactId>
+                <version>${kafka-streams-avro-serde.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-streams</artifactId>
+                <version>${kafka-streams.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-clients</artifactId>
+                <version>${kafka-clients.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.apache.avro</groupId>

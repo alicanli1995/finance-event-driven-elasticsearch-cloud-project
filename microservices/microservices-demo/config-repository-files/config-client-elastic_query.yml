@@ -1,13 +1,43 @@
+
 server:
   port: 8183
   servlet:
     context-path: /elastic-query-service
-    
+
 elastic-query-config:
   text-field: shareData.c
-  
+
+spring:
+  banner:
+    location: classpath:banner.txt
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/microservices-realm
+          jwk-set-uri: http://localhost:8080/realms/microservices-realm/protocol/openid-connect/certs
+  jpa:
+    open-in-view: false
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/keycloak?currentSchema=public&binaryTransfer=true&reWriteBatchedInserts=true
+    username: keycloak
+    password: password
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+    schema: classpath:init-schema.sql
+    data: classpath:init-data.sql
+    initialization-mode: always
+
+
+
 elastic-query-service:
   version: v1
+  custom-audience: elastic-query-service
 
 user-config:
   username: user
@@ -19,7 +49,7 @@ elastic-config:
   connection-url: http://localhost:9200
   connect-timeout-ms: 5000
   socket-timeout-ms: 30000
-  
+
 springdoc:
   api-docs:
     path: /api-docs
@@ -28,3 +58,4 @@ springdoc:
 
 security:
   paths-to-ignore: /api-docs
+

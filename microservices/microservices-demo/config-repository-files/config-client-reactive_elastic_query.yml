@@ -27,6 +27,8 @@ server:
   port: 8183
 
 spring:
+  banner:
+    location: classpath:banner.txt
   webflux:
     base-path: /reactive-elastic-query-service
   codec:

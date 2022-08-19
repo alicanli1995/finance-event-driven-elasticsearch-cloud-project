@@ -10,12 +10,14 @@ elastic-query-web-client:
   query-by-text:
     method: POST
     uri: "/get-doc-by-text"
-    accept: ${elastic-query-web-client.webclient.accept-type}
+    accept: 'text/event-stream'
 
 server:
   port: 8184
 
 spring:
+  banner:
+    location: classpath:banner.txt
   webflux:
     base-path: /reactive-elastic-query-web-client
   thymeleaf:

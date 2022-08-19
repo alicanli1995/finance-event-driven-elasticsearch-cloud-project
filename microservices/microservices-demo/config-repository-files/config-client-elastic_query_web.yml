@@ -11,7 +11,7 @@ elastic-query-web-client:
     max-in-memory-size: 10485760 # 10MB
     content-type: 'application/vnd.api.v1+json'
     accept-type: 'application/vnd.api.v1+json'
-    base-url: 'http://elastic-query-service/elastic-query-service/documents'
+    base-url: 'http://localhost:8183/elastic-query-service/documents'
     service-id: elastic-query-service
     instances:
       -
@@ -28,8 +28,28 @@ elastic-query-web-client:
     accept: ${elastic-query-web-client.webclient.accept-type}
 
 spring:
+  banner:
+    location: classpath:banner.txt
   thymeleaf:
     cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: 'elastic-query-web-client'
+            client-secret: fndrklw5MhOTSd6a930WWdYTu8xhD3DY
+            authorization-grant-type: authorization_code
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            scope: openid
+        provider:
+          keycloak:
+            issuerUri: http://localhost:8080/realms/microservices-realm
+
+
+security:
+  logout-success-url: http://localhost:8184/elastic-query-web-client
+  default-client-registration-id: keycloak
 
 user-config:
   username: user

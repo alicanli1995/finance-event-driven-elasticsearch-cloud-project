@@ -41,3 +41,6 @@ elastic-config:
   socket-timeout-ms: 30000
   is-repository: true
 
+spring:
+  banner:
+    location: classpath:banner.txt
