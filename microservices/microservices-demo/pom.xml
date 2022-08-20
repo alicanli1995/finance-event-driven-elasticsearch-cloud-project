@@ -39,6 +39,7 @@
         <module>elastic-query-service-reactive</module>
         <module>elastic-query-web-client-reactive</module>
         <module>kafka-streams-service</module>
+        <module>analytics-service</module>
     </modules>
 
     <packaging>pom</packaging>

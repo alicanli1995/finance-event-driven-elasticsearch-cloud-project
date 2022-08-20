@@ -66,18 +66,18 @@ public class FinanceElasticQueryService implements ElasticQueryService {
     }
 
     private String getVolumeLiveValue(String c, String jwt) {
-        ElasticQueryServiceConfigData.Query queryFromKafkaStateStore =
-                elasticQueryServiceConfigData.getQueryFromKafkaStateStore();
+        ElasticQueryServiceConfigData.Query queryFromAnalyticsDatabase =
+                elasticQueryServiceConfigData.getQueryFromAnalyticsDatabase();
 
         return Objects.requireNonNull(webClientBuilder
                 .build()
-                .method(HttpMethod.GET)
-                .uri(queryFromKafkaStateStore.getUri(), uriBuilder -> uriBuilder.build(c))
+                .method(HttpMethod.valueOf(queryFromAnalyticsDatabase.getMethod()))
+                .uri(queryFromAnalyticsDatabase.getUri(), uriBuilder -> uriBuilder.build(c))
                 .headers(h -> {
                     h.setBearerAuth(jwt);
                     h.set(CORRELATION_ID_HEADER, MDC.get(CORRELATION_ID_KEY));
                 })
-                .accept(MediaType.valueOf(queryFromKafkaStateStore.getAccept()))
+                .accept(MediaType.valueOf(queryFromAnalyticsDatabase.getAccept()))
                 .retrieve()
                 .onStatus(
                         s -> s.equals(HttpStatus.UNAUTHORIZED),
@@ -93,8 +93,6 @@ public class FinanceElasticQueryService implements ElasticQueryService {
                 .bodyToMono(KafkaStreamsResponseModel.class)
                 .log()
                 .block()).getShareVolume();
-
-
     }
 
     @Override

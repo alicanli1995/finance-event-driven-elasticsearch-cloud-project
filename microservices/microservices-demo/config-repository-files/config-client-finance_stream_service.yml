@@ -1,6 +1,8 @@
 spring:
   banner:
     location: classpath:banner.txt
+server:
+  port: 9090
 
 finance-share:
   share-list:
@@ -24,6 +26,7 @@ kafka-config:
   topic-name: finance-topic
   topic-names-to-create:
     - finance-topic
+    - finance-analytics-topic
   num-of-partitions: 3
   replication-factor: 3
 

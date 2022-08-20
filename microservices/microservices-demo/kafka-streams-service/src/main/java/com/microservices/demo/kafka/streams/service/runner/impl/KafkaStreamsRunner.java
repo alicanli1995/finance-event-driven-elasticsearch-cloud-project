@@ -103,7 +103,7 @@ public class KafkaStreamsRunner implements StreamsRunner<String, Long> {
                         Produced.with(Serdes.String(), analyticsModel));
     }
 
-    private KeyValueMapper<String, String , KeyValue<? extends String, ? extends FinanceAnalyticsAvroModel>> mapToAnalyticsModel() {
+    private KeyValueMapper<String, String , KeyValue< String, FinanceAnalyticsAvroModel>> mapToAnalyticsModel() {
         return (word, count) -> {
             var st = Arrays.stream(count.split(":")).toList();
             log.info("Sending to topic {}, share {} - value {}",
