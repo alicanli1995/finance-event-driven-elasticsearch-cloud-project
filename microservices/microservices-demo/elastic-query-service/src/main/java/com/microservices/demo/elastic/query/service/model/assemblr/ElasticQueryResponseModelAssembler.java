@@ -13,8 +13,8 @@ import java.util.List;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@Component
 @Slf4j
+@Component
 public class ElasticQueryResponseModelAssembler extends
         RepresentationModelAssemblerSupport<FinanceIndexModel, ElasticQueryResponseModel> {
 

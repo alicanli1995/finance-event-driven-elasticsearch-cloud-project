@@ -1,8 +1,10 @@
 package com.microservices.demo.elastic.query.service.security;
 
 
+import com.microservices.demo.elastic.model.index.model.FinanceAvroDTO;
 import com.microservices.demo.elastic.query.service.common.model.ElasticQueryRequestModel;
 import com.microservices.demo.elastic.query.service.common.model.ElasticQueryResponseModel;
+import com.microservices.demo.elastic.query.service.model.ElasticQueryServiceAnalyticsResponseModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
@@ -10,8 +12,9 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.util.List;
+import java.time.ZonedDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 @Component
 public class QueryServicePermissionEvaluator implements PermissionEvaluator {
@@ -38,13 +41,26 @@ public class QueryServicePermissionEvaluator implements PermissionEvaluator {
             if (targetDomain == null) {
                 return true;
             }
-            List<ElasticQueryResponseModel> responseBody =
-                    ((ResponseEntity<List<ElasticQueryResponseModel>>) targetDomain).getBody();
+            ElasticQueryServiceAnalyticsResponseModel responseBody =
+                    ((ResponseEntity<ElasticQueryServiceAnalyticsResponseModel>) targetDomain).getBody();
             Objects.requireNonNull(responseBody);
-            return postAuthorize(authentication, responseBody, permission);
+            return postAuthorize(authentication, ElasticQueryResponseModel
+                            .builder()
+                    .createdAt(ZonedDateTime.now())
+                    .id(UUID.randomUUID().toString())
+                    .shareData(
+                            FinanceAvroDTO
+                                .builder()
+                                    .last(responseBody.getShareVolume())
+                                    .c(responseBody.getQueryResponseModels())
+                                .build()
+                    )
+                            .build()
+                    , permission);
         }
         return false;
     }
+
 
 
     @Override
@@ -68,16 +84,12 @@ public class QueryServicePermissionEvaluator implements PermissionEvaluator {
     }
 
     private boolean postAuthorize(Authentication authentication,
-                                  List<ElasticQueryResponseModel> responseBody,
+                                  ElasticQueryResponseModel responseBody,
                                   Object permission) {
-        FinanceQueryUser twitterQueryUser = (FinanceQueryUser) authentication.getPrincipal();
-        for (ElasticQueryResponseModel responseModel : responseBody) {
-            PermissionType userPermission = twitterQueryUser.getPermissions().get(responseModel.getId());
-            if (!hasPermission((String) permission, userPermission)) {
-                return false;
-            }
-        }
-        return true;
+        FinanceQueryUser financeQueryUser = (FinanceQueryUser) authentication.getPrincipal();
+
+            PermissionType userPermission = financeQueryUser.getPermissions().get(responseBody.getId());
+        return hasPermission((String) permission, userPermission);
     }
 
     private boolean hasPermission(String requiredPermission, PermissionType userPermission) {

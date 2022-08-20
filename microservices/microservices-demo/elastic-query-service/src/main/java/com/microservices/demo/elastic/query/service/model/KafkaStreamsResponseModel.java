@@ -1,4 +1,4 @@
-package com.microservices.demo.kafka.streams.service.model;
+package com.microservices.demo.elastic.query.service.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

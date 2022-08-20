@@ -12,6 +12,3 @@ spring:
       password: spring_cloud_password
   config:
     import: configserver:http://localhost:8888
-logging:
-  level:
-    root: DEBUG

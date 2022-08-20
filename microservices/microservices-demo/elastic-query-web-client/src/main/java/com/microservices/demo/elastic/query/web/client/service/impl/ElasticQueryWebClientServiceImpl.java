@@ -3,7 +3,7 @@ package com.microservices.demo.elastic.query.web.client.service.impl;
 import com.microservices.demo.config.ElasticQueryWebClientConfigData;
 import com.microservices.demo.elastic.query.web.client.common.exception.ElasticQueryWebClientException;
 import com.microservices.demo.elastic.query.web.client.common.model.ElasticQueryWebClientRequestModel;
-import com.microservices.demo.elastic.query.web.client.common.model.ElasticQueryWebClientResponseModel;
+import com.microservices.demo.elastic.query.web.client.model.ElasticQueryWebClientAnalyticsResponseModel;
 import com.microservices.demo.elastic.query.web.client.service.ElasticQueryWebClientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,8 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 @Service
 @Slf4j
@@ -35,11 +33,10 @@ public class ElasticQueryWebClientServiceImpl implements ElasticQueryWebClientSe
 
 
     @Override
-    public List<ElasticQueryWebClientResponseModel> getShareByC(ElasticQueryWebClientRequestModel model) {
+    public ElasticQueryWebClientAnalyticsResponseModel getShareByC(ElasticQueryWebClientRequestModel model) {
         log.info("ElasticQueryWebClientServiceImpl.getShareByC()");
         return getWebClient(model)
-                .bodyToFlux(ElasticQueryWebClientResponseModel.class)
-                .collectList()
+                .bodyToMono(ElasticQueryWebClientAnalyticsResponseModel.class)
                 .block();
     }
 

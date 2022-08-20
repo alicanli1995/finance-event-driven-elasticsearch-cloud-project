@@ -34,3 +34,4 @@ build/
 /.mvn/
 /infrastructure/docker-compose/pgdata/
 /infrastructure/docker-compose/volumes/
+/infrastructure/docker-compose/pgdata/

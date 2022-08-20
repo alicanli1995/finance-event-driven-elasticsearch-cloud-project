@@ -8,8 +8,8 @@ import org.springframework.security.oauth2.core.OAuth2TokenValidatorResult;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
-@Qualifier(value = "kafka-streams-service-audience-validator")
 @Component
+@Qualifier(value = "kafka-streams-service-audience-validator")
 public class AudienceValidator implements OAuth2TokenValidator<Jwt> {
 
     private final KafkaStreamsServiceConfigData kafkaStreamsServiceConfig;

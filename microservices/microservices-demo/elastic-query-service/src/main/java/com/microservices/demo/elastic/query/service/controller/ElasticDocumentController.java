@@ -2,6 +2,8 @@ package com.microservices.demo.elastic.query.service.controller;
 
 import com.microservices.demo.elastic.query.service.common.model.ElasticQueryRequestModel;
 import com.microservices.demo.elastic.query.service.common.model.ElasticQueryResponseModel;
+import com.microservices.demo.elastic.query.service.model.ElasticQueryServiceAnalyticsResponseModel;
+import com.microservices.demo.elastic.query.service.security.FinanceQueryUser;
 import com.microservices.demo.elastic.query.service.service.ElasticQueryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,8 +16,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -93,11 +98,16 @@ public class ElasticDocumentController {
     @PostAuthorize("hasPermission(returnObject, 'READ')")
     @PreAuthorize("hasRole('APP_USER_ROLE') || hasRole('APP_SUPER_USER_ROLE') || hasAuthority('SCOPE_APP_USER_ROLE')")
     @PostMapping("/get-document-by-text")
-    public ResponseEntity<List<ElasticQueryResponseModel>> getDocumentsByShareData(
-            @RequestBody ElasticQueryRequestModel elasticQueryRequestModel){
-        List<ElasticQueryResponseModel> response =
-                elasticQueryService.getDocumentsByShareData(elasticQueryRequestModel.getShareData().getC());
-        log.info("Elasticsearch returned {} of documents", response.size());
+    public ResponseEntity<ElasticQueryServiceAnalyticsResponseModel> getDocumentsByShareData(
+            @RequestBody ElasticQueryRequestModel elasticQueryRequestModel,
+            @AuthenticationPrincipal FinanceQueryUser principal,
+            @RegisteredOAuth2AuthorizedClient("keycloak")
+            OAuth2AuthorizedClient oAuth2AuthorizedClient){
+
+        var response =
+        elasticQueryService.getDocumentsByShareData(elasticQueryRequestModel.getShareData().getC(),
+                oAuth2AuthorizedClient.getAccessToken().getTokenValue());
+        log.info("Elasticsearch returned {} of documents", response.getQueryResponseModels());
         log.info("This information retrieving from {}", serverPort);
         return ResponseEntity.ok(response);
     }

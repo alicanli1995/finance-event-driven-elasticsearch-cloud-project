@@ -1,4 +1,6 @@
 spring:
+  banner:
+    location: classpath:banner.txt
   security:
     user:
       name: spring_cloud_user

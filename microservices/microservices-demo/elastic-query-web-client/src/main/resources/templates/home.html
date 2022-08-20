@@ -14,30 +14,30 @@
                     <input class="btn btn-dark" type="submit" value="Search">
                 </div>
             </div>
-            <div class="col-12" th:switch="${elasticQueryWebClientResponseModels}">
+            <div class="col-12" th:switch="${elasticQueryClientResponseModels}">
                 <h4 th:case="null">
                     <span th:text="${error != null} ? ${error} : 'No results yet!'"/>
                 </h4>
                 <div th:case="*">
-                    <h4>Search results for '<span th:text="${searchText}"/>'</h4>
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Value</th>
-                            <th scope="col">Time</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="elasticQueryWebClientResponseModel : ${elasticQueryWebClientResponseModels}">
-                            <th scope="row" th:text="${elasticQueryWebClientResponseModel.id}"></th>
-                            <td th:text="${elasticQueryWebClientResponseModel.shareData.description}"></td>
-                            <td th:text="${elasticQueryWebClientResponseModel.shareData.last}"></td>
-                            <td th:text="${elasticQueryWebClientResponseModel.createdAt}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <h4>Search results for '<span th:text="${searchText}"/>' It's live volume is : <span th:text="${liveVolume}"/></h4>
+<!--                    <table class="table table-striped">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <th scope="col">ID</th>-->
+<!--                            <th scope="col">Name</th>-->
+<!--                            <th scope="col">Value</th>-->
+<!--                            <th scope="col">Time</th>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                        <tr th:each="elasticQueryWebClientResponseModel : ${elasticQueryClientResponseModels}">-->
+<!--                            <th scope="row" th:text="${elasticQueryWebClientResponseModel.id}"></th>-->
+<!--                            <td th:text="${elasticQueryWebClientResponseModel.shareData.description}"></td>-->
+<!--                            <td th:text="${elasticQueryWebClientResponseModel.shareData.last}"></td>-->
+<!--                            <td th:text="${elasticQueryWebClientResponseModel.createdAt}"></td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
                 </div>
             </div>
 

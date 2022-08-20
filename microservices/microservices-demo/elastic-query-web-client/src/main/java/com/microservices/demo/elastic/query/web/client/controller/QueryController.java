@@ -1,7 +1,6 @@
 package com.microservices.demo.elastic.query.web.client.controller;
 
 import com.microservices.demo.elastic.query.web.client.common.model.ElasticQueryWebClientRequestModel;
-import com.microservices.demo.elastic.query.web.client.common.model.ElasticQueryWebClientResponseModel;
 import com.microservices.demo.elastic.query.web.client.service.ElasticQueryWebClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.annotation.RequestScope;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Slf4j
 @Validated
@@ -46,12 +44,14 @@ public class QueryController {
     @PostMapping("/query-by-text")
     public String queryByText(@Valid ElasticQueryWebClientRequestModel requestModel,
                               Model model) {
-        log.info("Querying with text {}", requestModel.getShareData().getC());
-        List<ElasticQueryWebClientResponseModel> responseModels = elasticQueryWebClientService.getShareByC(requestModel);
-        model.addAttribute("elasticQueryWebClientResponseModels", responseModels);
+        var responseModel = elasticQueryWebClientService.getShareByC(requestModel);
+
+        model.addAttribute("elasticQueryClientResponseModels", responseModel.getQueryResponseModels());
+        model.addAttribute("liveVolume", responseModel.getShareVolume());
         model.addAttribute("searchText", requestModel.getShareData().getC());
-        model.addAttribute("elasticQueryWebClientRequestModel",
+        model.addAttribute("elasticQueryClientRequestModel",
                 ElasticQueryWebClientRequestModel.builder().build());
+        log.info("Returning from reactive client controller for text {} !", requestModel.getShareData().getC());
         return "home";
     }
 
