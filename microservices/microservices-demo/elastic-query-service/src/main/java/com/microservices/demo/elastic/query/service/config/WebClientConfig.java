@@ -5,7 +5,6 @@ import com.microservices.demo.config.ElasticQueryServiceConfigData;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +23,6 @@ public class WebClientConfig {
         this.elasticQueryServiceConfigData = queryServiceConfigData.getWebClient();
     }
 
-    @LoadBalanced
     @Bean
     WebClient.Builder webClientBuilder() {
         return WebClient.builder()

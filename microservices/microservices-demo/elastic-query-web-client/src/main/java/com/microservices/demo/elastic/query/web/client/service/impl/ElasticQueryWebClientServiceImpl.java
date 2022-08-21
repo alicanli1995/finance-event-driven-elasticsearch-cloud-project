@@ -6,6 +6,7 @@ import com.microservices.demo.elastic.query.web.client.common.model.ElasticQuery
 import com.microservices.demo.elastic.query.web.client.model.ElasticQueryWebClientAnalyticsResponseModel;
 import com.microservices.demo.elastic.query.web.client.service.ElasticQueryWebClientService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -20,7 +21,8 @@ import reactor.core.publisher.Mono;
 @Service
 @Slf4j
 public class ElasticQueryWebClientServiceImpl implements ElasticQueryWebClientService {
-
+    public static final String CORRELATION_ID_HEADER = "X-Correlation-ID";
+    public static final String CORRELATION_ID_KEY = "correlationID";
     private final WebClient.Builder webClientBuilder;
     private final ElasticQueryWebClientConfigData elasticQueryWebClientConfigData;
 
@@ -47,6 +49,7 @@ public class ElasticQueryWebClientServiceImpl implements ElasticQueryWebClientSe
                 .method(HttpMethod.valueOf(elasticQueryWebClientConfigData.getQueryByText().getMethod()))
                 .uri(elasticQueryWebClientConfigData.getQueryByText().getUri())
                 .accept(MediaType.valueOf(elasticQueryWebClientConfigData.getQueryByText().getAccept()))
+                .header(CORRELATION_ID_HEADER, MDC.get(CORRELATION_ID_KEY))
                 .body(BodyInserters.fromPublisher(Mono.just(requestModel), createParameterizedTypeReference()))
                 .retrieve()
                 .onStatus(
@@ -54,11 +57,13 @@ public class ElasticQueryWebClientServiceImpl implements ElasticQueryWebClientSe
                         clientResponse -> Mono.just(new BadCredentialsException("Not authenticated!")))
                 .onStatus(
                         HttpStatus::is4xxClientError,
-                        cr -> Mono.just(new ElasticQueryWebClientException(cr.statusCode().getReasonPhrase())))
+                        clientResponse -> Mono.just(
+                                new ElasticQueryWebClientException(clientResponse.statusCode().getReasonPhrase())))
                 .onStatus(
                         HttpStatus::is5xxServerError,
-                        cr -> Mono.just(new Exception(cr.statusCode().getReasonPhrase())));
+                        clientResponse -> Mono.just(new Exception(clientResponse.statusCode().getReasonPhrase())));
     }
+
 
 
     private <T> ParameterizedTypeReference<T> createParameterizedTypeReference() {

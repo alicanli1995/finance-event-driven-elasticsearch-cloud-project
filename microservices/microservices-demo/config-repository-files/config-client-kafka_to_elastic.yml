@@ -42,5 +42,9 @@ elastic-config:
   is-repository: true
 
 spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
   banner:
     location: classpath:banner.txt

@@ -9,7 +9,7 @@ INSERT INTO public.users(
 	VALUES ('7c60fd48-89be-40c6-8b96-3198b62fd986', 'app_admin', 'Admin', 'User');
 INSERT INTO public.users(
 	id, username, firstname, lastname)
-	VALUES ('8034bb2f-6558-4832-9ddf-bafe0168ac24', 'app_super_user', 'Super', 'User');
+	VALUES ('9308257d-8b85-4b9f-a6a3-53d43d77141a', 'app_super_user', 'Super', 'User');
 
 
 insert into documents(id, document_id)
@@ -29,7 +29,7 @@ insert into user_permissions(user_permission_id, user_id, document_id, permissio
 values (uuid_generate_v4(),'7c60fd48-89be-40c6-8b96-3198b62fd986', '90573d2b-9a5d-409e-bbb6-b94189709a19', 'READ');
 
 insert into user_permissions(user_permission_id, user_id, document_id, permission_type)
-values (uuid_generate_v4(), '8034bb2f-6558-4832-9ddf-bafe0168ac24', '90573d2b-9a5d-409e-bbb6-b94189709a19', 'READ');
+values (uuid_generate_v4(), '9308257d-8b85-4b9f-a6a3-53d43d77141a', '90573d2b-9a5d-409e-bbb6-b94189709a19', 'READ');
 
 insert into user_permissions(user_permission_id, user_id, document_id, permission_type)
 values (uuid_generate_v4(), '1273a5e2-15b5-4a06-968c-01513aa13be5', '90573d2b-9a5d-409e-bbb6-b94189709a19', 'READ');

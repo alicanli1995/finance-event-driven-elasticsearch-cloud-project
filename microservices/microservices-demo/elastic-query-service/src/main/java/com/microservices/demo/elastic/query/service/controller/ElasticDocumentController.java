@@ -24,6 +24,7 @@ import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2Aut
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -85,30 +86,31 @@ public class ElasticDocumentController {
         return ResponseEntity.ok(elasticQueryServiceResponseModel);
     }
 
-    @Operation(summary = "Search documents in Elasticsearch with ShareName",
-            description = "Search documents in Elasticsearch with ShareName")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content =
-            @Content(schema =
-            @Schema(implementation = ElasticQueryResponseModel.class))),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error")
-    })
-    @ResponseBody
-    @PostAuthorize("hasPermission(returnObject, 'READ')")
-    @PreAuthorize("hasRole('APP_USER_ROLE') || hasRole('APP_SUPER_USER_ROLE') || hasAuthority('SCOPE_APP_USER_ROLE')")
-    @PostMapping("/get-document-by-text")
-    public ResponseEntity<ElasticQueryServiceAnalyticsResponseModel> getDocumentsByShareData(
-            @RequestBody ElasticQueryRequestModel elasticQueryRequestModel,
-            @AuthenticationPrincipal FinanceQueryUser principal,
-            @RegisteredOAuth2AuthorizedClient("keycloak")
-            OAuth2AuthorizedClient oAuth2AuthorizedClient){
 
-        var response =
-        elasticQueryService.getDocumentsByShareData(elasticQueryRequestModel.getShareData().getC(),
-                oAuth2AuthorizedClient.getAccessToken().getTokenValue());
-        log.info("Elasticsearch returned {} of documents", response.getQueryResponseModels());
-        log.info("This information retrieving from {}", serverPort);
+    @PreAuthorize("hasRole('APP_USER_ROLE') || hasRole('APP_SUPER_USER_ROLE') || hasAuthority('SCOPE_APP_USER_ROLE')")
+    @PostAuthorize("hasPermission(returnObject, 'READ')")
+    @Operation(summary = "Get elastic document by text.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful response.", content = {
+                    @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ElasticQueryResponseModel.class)
+                    )
+            }),
+            @ApiResponse(responseCode = "400", description = "Not found."),
+            @ApiResponse(responseCode = "500", description = "Internal server error.")
+    })
+    @PostMapping("/get-document-by-text")
+    public @ResponseBody
+    ResponseEntity<ElasticQueryServiceAnalyticsResponseModel>
+    getDocumentByText(@RequestBody @Valid ElasticQueryRequestModel elasticQueryServiceRequestModel,
+                      @AuthenticationPrincipal FinanceQueryUser principal,
+                      @RegisteredOAuth2AuthorizedClient("keycloak")
+                      OAuth2AuthorizedClient oAuth2AuthorizedClient) {
+        log.info("User {} querying documents for text {}", principal.getUsername(),
+                elasticQueryServiceRequestModel.getShareData().getC());
+        ElasticQueryServiceAnalyticsResponseModel response =
+                elasticQueryService.getDocumentsByShareData(elasticQueryServiceRequestModel.getShareData().getC(),
+                        oAuth2AuthorizedClient.getAccessToken().getTokenValue());
         return ResponseEntity.ok(response);
     }
 

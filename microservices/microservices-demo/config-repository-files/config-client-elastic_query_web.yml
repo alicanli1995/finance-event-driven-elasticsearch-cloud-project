@@ -12,12 +12,6 @@ elastic-query-web-client:
     content-type: 'application/json'
     accept-type: 'application/json'
     base-url: 'http://localhost:8183/elastic-query-service/documents'
-    service-id: elastic-query-service
-    instances:
-      -
-        id: elastic-query-service-1
-        host: localhost
-        port: 8183
   query-by-text:
     method: POST
     uri: "/get-document-by-text"
@@ -34,7 +28,7 @@ spring:
         registration:
           keycloak:
             client-id: 'elastic-query-web-client'
-            client-secret: fndrklw5MhOTSd6a930WWdYTu8xhD3DY
+            client-secret: 'b5IlkZG9q99nXhM6RiauSZlkXrlwgP4L'
             authorization-grant-type: authorization_code
             redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
             scope: openid
