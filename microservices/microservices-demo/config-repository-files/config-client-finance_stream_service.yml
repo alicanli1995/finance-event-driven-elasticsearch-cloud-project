@@ -1,8 +1,12 @@
 spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
   banner:
     location: classpath:banner.txt
 server:
-  port: 9090
+  port: 3333
 
 finance-share:
   share-list:
@@ -29,7 +33,7 @@ kafka-config:
     - finance-analytics-topic
   num-of-partitions: 3
   replication-factor: 3
-
+      
 
 kafka-producer-config:
   key-serializer-class: org.apache.kafka.common.serialization.StringSerializer

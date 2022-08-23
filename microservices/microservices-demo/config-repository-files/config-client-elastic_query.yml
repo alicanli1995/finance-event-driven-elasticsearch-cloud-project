@@ -7,6 +7,7 @@ server:
 elastic-query-config:
   text-field: shareData.c
 
+
 spring:
   cloud:
     loadbalancer:
@@ -24,7 +25,7 @@ spring:
         registration:
           keycloak:
             client-id: 'elastic-query-service'
-            client-secret: 'GlcDNgtL42bNlXuxZRzy7OBD4aYWZ61p'
+            client-secret: 'PHy2GVIuQ3GMrfk7lzIAJdz298k8GBYz'
             authorizationGrantType: client_credentials
         provider:
           keycloak:
@@ -87,6 +88,18 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
+    
 security:
-  paths-to-ignore: /api-docs
+  paths-to-ignore: /api-docs, /actuator/**
 
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure.include: health, prometheus
+      path-mapping.prometheus: metrics
+  endpoint:
+    health:
+      show-details: always
+    prometheus:
+      cache.time-to-live: 1ms
