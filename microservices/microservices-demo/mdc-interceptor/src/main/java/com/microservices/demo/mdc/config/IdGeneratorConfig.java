@@ -1,4 +1,4 @@
-package com.microservices.demo.common.config;
+package com.microservices.demo.mdc.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

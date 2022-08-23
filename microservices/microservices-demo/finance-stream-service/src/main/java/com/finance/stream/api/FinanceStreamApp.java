@@ -6,16 +6,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@SpringBootApplication
+@Slf4j
+@EnableScheduling
 @EnableFeignClients
+@EnableDiscoveryClient
+@SpringBootApplication
 @ComponentScan(basePackages = {"com.microservices.demo",
                                "com.finance.stream.api"})
-@EnableScheduling
-@Slf4j
 @RequiredArgsConstructor
 public class FinanceStreamApp implements CommandLineRunner {
     public static void main(String[] args) {

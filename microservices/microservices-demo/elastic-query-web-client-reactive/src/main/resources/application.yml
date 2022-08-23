@@ -6,10 +6,10 @@ spring:
   cloud:
     config:
       name: reactive-elastic-query-web-client,config-client
-      uri: http://localhost:8888
+      uri: http://config-server:8888
       enabled: true
       username: spring_cloud_user
       password: spring_cloud_password
   config:
-    import: configserver:http://localhost:8888
+    import: configserver:http://config-server:8888
 
