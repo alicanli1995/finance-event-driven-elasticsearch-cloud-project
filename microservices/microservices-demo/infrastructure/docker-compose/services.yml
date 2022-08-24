@@ -144,7 +144,7 @@ services:
       - "ELASTIC-CONFIG_INDEX-NAME=bist-index"
       - "ELASTIC-CONFIG_CONNECTION-URL=http://elastic-1:9200"
       - "SERVER_PORT=8183"
-      - "SERVER_SERVLET_CONTEXT-PATH=/"
+      - "SERVER_SERVLET_CONTEXT-PATH=/elastic-query-service"
       - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
       - "SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI=http://keycloak:8080/realms/microservices-realm"
       - "SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI=http://keycloak:8080/realms/microservices-realm/protocol/openid-connect/certs"
@@ -214,7 +214,7 @@ services:
       - "LOGGING_LEVEL_COM_MICROSERVICES_DEMO=debug"
       - "LOGGING_LEVEL_ROOT=info"
       - "SERVER_PORT=8187"
-      - "SERVER_SERVLET_CONTEXT-PATH=/"
+      - "SERVER_SERVLET_CONTEXT-PATH=/kafka-streams-service"
       - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
       - "SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI=http://keycloak:8080/realms/microservices-realm"
       - "SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI=http://keycloak:8080/realms/microservices-realm/protocol/openid-connect/certs"
@@ -246,7 +246,7 @@ services:
       - "LOGGING_LEVEL_COM_MICROSERVICES_DEMO=error"
       - "LOGGING_LEVEL_ROOT=info"
       - "SERVER_PORT=8188"
-      - "SERVER_SERVLET_CONTEXT-PATH=/"
+      - "SERVER_SERVLET_CONTEXT-PATH=/analytics-service"
       - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
       - "SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI=http://keycloak:8080/realms/microservices-realm"
       - "SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI=http://keycloak:8080/realms/microservices-realm/protocol/openid-connect/certs"
@@ -291,26 +291,26 @@ services:
     networks:
       - ${GLOBAL_NETWORK:-services}
 
-#  gateway-service:
-#    image: ${GROUP_ID}/gateway.service:${SERVICE_VERSION:-latest}
-#    ports:
-#      - "5016:5016"
-#      - "9092:9092"
-#    volumes:
-#      - "./docker-logs:/workspace/gateway-service/logs"
-#      - "./logstash-logs:/workspace/gateway-service/logstash/logs"
-#      - "./check-config-server-started.sh:/usr/local/bin/check-config-server-started.sh"
-#      - "./check-keycloak-server-started.sh:/usr/local/bin/check-keycloak-server-started.sh"
-#    user: root
-#    entrypoint: [ "check-config-server-started.sh" ]
-#    links:
-#      - "redis-master:redis"
-#    environment:
-#      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5016 -Xms128m -Xmx256m"
-#      - "LOGGING_LEVEL_ROOT=info"
-#      - "SERVER_PORT=9092"
-#      - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
-#      - "SPRING_REDIS_HOST=redis"
-#      - "EUREKA_CLIENT_SERVICE-URL_DEFAULT-ZONE=http://discovery-service-2:8762/eureka/,http://discovery-service-1:8761/eureka/"
-#    networks:
-#      - ${GLOBAL_NETWORK:-services}
+  gateway-service:
+    image: ${GROUP_ID}/gateway.service:${SERVICE_VERSION:-latest}
+    ports:
+      - "5016:5016"
+      - "1111:1111"
+    volumes:
+      - "./docker-logs:/workspace/gateway-service/logs"
+      - "./logstash-logs:/workspace/gateway-service/logstash/logs"
+      - "./check-config-server-started.sh:/usr/local/bin/check-config-server-started.sh"
+      - "./check-keycloak-server-started.sh:/usr/local/bin/check-keycloak-server-started.sh"
+    user: root
+    entrypoint: [ "check-config-server-started.sh" ]
+    links:
+      - "redis-master:redis"
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5016 -Xms128m -Xmx256m"
+      - "LOGGING_LEVEL_ROOT=info"
+      - "SERVER_PORT=1111"
+      - "SPRING_CLOUD_CONFIG_URI=http://config-server:8888"
+      - "SPRING_REDIS_HOST=redis"
+      - "EUREKA_CLIENT_SERVICE-URL_DEFAULT-ZONE=http://discovery-service-2:8762/eureka/,http://discovery-service-1:8761/eureka/"
+    networks:
+      - ${GLOBAL_NETWORK:-services}

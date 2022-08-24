@@ -12,24 +12,19 @@ scrape_configs:
     scrape_interval: 1m
     metrics_path: '/actuator/metrics'
     static_configs:
-      - targets: ['api-gateway:9092']
+      - targets: ['gateway-service:1111']
   - job_name: 'elastic-query-service-1'
     scrape_interval: 1m
-    metrics_path: '/actuator/metrics'
+    metrics_path: 'elastic-query-service/actuator/metrics'
     static_configs:
       - targets: ['elastic-query-service-1:8183']
-  - job_name: 'elastic-query-service-2'
-    scrape_interval: 1m
-    metrics_path: '/actuator/metrics'
-    static_configs:
-      - targets: [ 'elastic-query-service-2:8186' ]
   - job_name: 'kafka-streams-service'
     scrape_interval: 1m
-    metrics_path: '/actuator/metrics'
+    metrics_path: 'kafka-streams-service/actuator/metrics'
     static_configs:
       - targets: ['kafka-streams-service:8187']
   - job_name: 'analytics-service'
     scrape_interval: 1m
-    metrics_path: '/actuator/metrics'
+    metrics_path: 'analytics-service/actuator/metrics'
     static_configs:
       - targets: ['analytics-service:8188']
