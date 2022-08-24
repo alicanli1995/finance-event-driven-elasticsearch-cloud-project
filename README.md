@@ -4,7 +4,7 @@
 <img src="img/diagram.jpg" alt="ci" width="1000" class="center"/>
 </p>
 
-# Progress: %30
+# Progress: Finish...
 
 ### Project Properties:
 
