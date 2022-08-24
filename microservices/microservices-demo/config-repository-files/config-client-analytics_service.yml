@@ -10,11 +10,12 @@ analytics-service:
 security:
   paths-to-ignore: /api-docs, /actuator/**
 
+
 management:
   endpoints:
     web:
       base-path: /actuator
-      exposure.include: health, prometheus, metrics
+      exposure.include: health, prometheus
       path-mapping.prometheus: metrics
   endpoint:
     health:

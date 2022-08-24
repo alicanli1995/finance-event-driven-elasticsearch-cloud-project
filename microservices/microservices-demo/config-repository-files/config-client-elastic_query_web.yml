@@ -11,7 +11,7 @@ elastic-query-web-client:
     max-in-memory-size: 10485760 # 10MB
     content-type: 'application/json'
     accept-type: 'application/json'
-    base-url: 'http://localhost:8183/elastic-query-service/documents'
+    base-url: 'http://elastic-query-service-1:8183/elastic-query-service/documents'
   query-by-text:
     method: POST
     uri: "/get-document-by-text"
@@ -32,7 +32,7 @@ spring:
         registration:
           keycloak:
             client-id: 'elastic-query-web-client'
-            client-secret: 'MvBk8L0GJxksV6Eh6nbieBwQroOs8vzq'
+            client-secret: 'REwKYcO7xZKijq6DV91N6dzl3TBBxser'
             authorization-grant-type: authorization_code
             redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
             scope: openid
@@ -42,7 +42,7 @@ spring:
 
 
 security:
-  logout-success-url: http://localhost:8184/elastic-query-web-client
+  logout-success-url: http://elastic-query-web-client:8184/elastic-query-web-client
   default-client-registration-id: keycloak
 
 user-config:
