@@ -1,6 +1,5 @@
 package com.microservices.demo.elastic.query.web.client.controller;
 
-import com.microservices.demo.config.FinanceDataStreamConfig;
 import com.microservices.demo.elastic.query.web.client.common.model.ElasticQueryWebClientRequestModel;
 import com.microservices.demo.elastic.query.web.client.model.LiveShareResponse;
 import com.microservices.demo.elastic.query.web.client.model.LiveValuesResponse;
@@ -16,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.annotation.RequestScope;
 
 import javax.validation.Valid;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Validated
@@ -25,7 +26,6 @@ import java.util.List;
 @RequestScope
 @RequiredArgsConstructor
 public class QueryController {
-    private final FinanceDataStreamConfig financeDataStreamConfig;
 
     private final ElasticQueryWebClientService elasticQueryWebClientService;
 
@@ -48,9 +48,9 @@ public class QueryController {
 
     @PostMapping("/query-by-text")
     public String queryByText(@Valid ElasticQueryWebClientRequestModel requestModel,
-                              Model model) {
+                              Model model){
         var responseModel = elasticQueryWebClientService.getShareByC(requestModel);
-        var shareList = financeDataStreamConfig.getShareList();
+        List<String> shareList = List.of("SASA","SISE","ANGEN","EREGL");
         LiveValuesResponse getLiveValues = elasticQueryWebClientService.getLiveLiveValues(shareList);
         var myList = calcMyShare(getLiveValues);
         model.addAttribute("elasticQueryClientResponseModels", myList);
@@ -62,8 +62,18 @@ public class QueryController {
         return "home";
     }
 
-    private LiveShareResponse calcMyShare(LiveValuesResponse getLiveValues) {
-        return null;
+    private List<LiveShareResponse> calcMyShare(LiveValuesResponse getLiveValues) {
+        return getLiveValues.getLiveValues()
+                .entrySet()
+                .stream()
+                .map(entry -> LiveShareResponse.builder()
+                        .id(UUID.randomUUID().toString())
+                        .description(entry.getKey())
+                        .last(entry.getValue().toString())
+                        .createdAt(ZonedDateTime.now().toString())
+                        .build())
+                .toList();
+
     }
 
 

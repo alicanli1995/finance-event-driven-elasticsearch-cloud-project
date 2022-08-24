@@ -32,8 +32,8 @@
                         <tbody>
                         <tr th:each="elasticQueryWebClientResponseModel : ${elasticQueryClientResponseModels}">
                             <th scope="row" th:text="${elasticQueryWebClientResponseModel.id}"></th>
-                            <td th:text="${elasticQueryWebClientResponseModel.shareData.description}"></td>
-                            <td th:text="${elasticQueryWebClientResponseModel.shareData.last}"></td>
+                            <td th:text="${elasticQueryWebClientResponseModel.description}"></td>
+                            <td th:text="${elasticQueryWebClientResponseModel.last}"></td>
                             <td th:text="${elasticQueryWebClientResponseModel.createdAt}"></td>
                         </tr>
                         </tbody>
