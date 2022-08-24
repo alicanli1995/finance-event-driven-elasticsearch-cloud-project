@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 public class ElasticQueryWebClientRequestModel {
 
     private String id;
-
     @NotNull
     private FinanceAvroDTO shareData;
 }

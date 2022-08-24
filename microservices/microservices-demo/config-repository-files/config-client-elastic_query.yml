@@ -25,7 +25,7 @@ spring:
         registration:
           keycloak:
             client-id: 'elastic-query-service'
-            client-secret: 'PHy2GVIuQ3GMrfk7lzIAJdz298k8GBYz'
+            client-secret: 'wpqFUZ63OWowc6r0r0kxKyQW8vut0qXJ'
             authorizationGrantType: client_credentials
         provider:
           keycloak:
@@ -63,11 +63,11 @@ elastic-query-service:
     query-type: 'ANALYTICS_DATABASE'
   query-from-kafka-state-store:
     method: GET
-    uri: "http://localhost:8187/kafka-streams-service/share-streams/{shareName}"
+    uri: "http://kafka-streams-service:8187/kafka-streams-service/share-streams/{shareName}"
     accept: ${elastic-query-service.webclient.accept-type}
   query-from-analytics-database:
     method: GET
-    uri: "http://localhost:8188/analytics-service/get-share-live/{shareName}"
+    uri: "http://analytics-service:8188/analytics-service/get-share-live/{shareName}"
     accept: ${elastic-query-service.webclient.accept-type}
 
 

@@ -12,7 +12,7 @@ finance-share:
   share-list:
     - SASA
     - SISE
-    - TOASO
+    - ANGEN
     - EREGL
   url-append: .E.BIST
 

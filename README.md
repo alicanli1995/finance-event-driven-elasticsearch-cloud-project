@@ -4,7 +4,26 @@
 <img src="img/diagram.jpg" alt="ci" width="1000" class="center"/>
 </p>
 
-# Progress: %30
+## Small summary : 
+### As a summary of the project, it is a project that takes the values of some stock market shares in BIST, thanks to the finance-stream-service, adds them to elasticsearch and creates a cloud stream with the data it receives and aims to use the data received by other services.
+
+## Some pictures on project...
+
+<p align="center">
+<img src="img/depende.png" alt="ci" width="1000" class="center"/>
+</p>
+<p align="center">
+<img src="img/eureka.png" alt="ci" width="1000" class="center"/>
+</p>
+<p align="center">
+<img src="img/graf.png" alt="ci" width="1000" class="center"/>
+</p>
+<p align="center">
+<img src="img/kibana.png" alt="ci" width="1000" class="center"/>
+</p>
+<p align="center">
+<img src="img/prom.png" alt="ci" width="1000" class="center"/>
+</p>
 
 ### Project Properties:
 

@@ -1,6 +1,8 @@
 package com.microservices.demo.elastic.query.web.client.controller;
 
 import com.microservices.demo.elastic.query.web.client.common.model.ElasticQueryWebClientRequestModel;
+import com.microservices.demo.elastic.query.web.client.model.LiveShareResponse;
+import com.microservices.demo.elastic.query.web.client.model.LiveValuesResponse;
 import com.microservices.demo.elastic.query.web.client.service.ElasticQueryWebClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.annotation.RequestScope;
 
 import javax.validation.Valid;
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Validated
@@ -43,16 +48,32 @@ public class QueryController {
 
     @PostMapping("/query-by-text")
     public String queryByText(@Valid ElasticQueryWebClientRequestModel requestModel,
-                              Model model) {
+                              Model model){
         var responseModel = elasticQueryWebClientService.getShareByC(requestModel);
-
-        model.addAttribute("elasticQueryClientResponseModels", responseModel.getQueryResponseModels());
+        List<String> shareList = List.of("SASA","SISE","ANGEN","EREGL");
+        LiveValuesResponse getLiveValues = elasticQueryWebClientService.getLiveLiveValues(shareList);
+        var myList = calcMyShare(getLiveValues);
+        model.addAttribute("elasticQueryClientResponseModels", myList);
         model.addAttribute("liveVolume", responseModel.getShareVolume());
         model.addAttribute("searchText", requestModel.getShareData().getC());
         model.addAttribute("elasticQueryClientRequestModel",
                 ElasticQueryWebClientRequestModel.builder().build());
         log.info("Returning from reactive client controller for text {} !", requestModel.getShareData().getC());
         return "home";
+    }
+
+    private List<LiveShareResponse> calcMyShare(LiveValuesResponse getLiveValues) {
+        return getLiveValues.getLiveValues()
+                .entrySet()
+                .stream()
+                .map(entry -> LiveShareResponse.builder()
+                        .id(UUID.randomUUID().toString())
+                        .description(entry.getKey())
+                        .last(entry.getValue().toString())
+                        .createdAt(ZonedDateTime.now().toString())
+                        .build())
+                .toList();
+
     }
 
 

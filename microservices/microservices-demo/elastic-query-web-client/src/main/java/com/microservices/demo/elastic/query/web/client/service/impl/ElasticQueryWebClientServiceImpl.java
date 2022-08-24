@@ -1,9 +1,11 @@
 package com.microservices.demo.elastic.query.web.client.service.impl;
 
 import com.microservices.demo.config.ElasticQueryWebClientConfigData;
+import com.microservices.demo.elastic.model.index.model.FinanceAvroDTO;
 import com.microservices.demo.elastic.query.web.client.common.exception.ElasticQueryWebClientException;
 import com.microservices.demo.elastic.query.web.client.common.model.ElasticQueryWebClientRequestModel;
 import com.microservices.demo.elastic.query.web.client.model.ElasticQueryWebClientAnalyticsResponseModel;
+import com.microservices.demo.elastic.query.web.client.model.LiveValuesResponse;
 import com.microservices.demo.elastic.query.web.client.service.ElasticQueryWebClientService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
@@ -17,6 +19,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -40,6 +47,18 @@ public class ElasticQueryWebClientServiceImpl implements ElasticQueryWebClientSe
         return getWebClient(model)
                 .bodyToMono(ElasticQueryWebClientAnalyticsResponseModel.class)
                 .block();
+    }
+
+    @Override
+    public LiveValuesResponse getLiveLiveValues(List<String> shareList) {
+        Map<String , BigDecimal> liveValuesMap = new HashMap<>();
+        shareList.forEach(share -> {
+            var response = getShareByC(ElasticQueryWebClientRequestModel.builder()
+                    .shareData(FinanceAvroDTO.builder().c(share).build())
+                    .build());
+            liveValuesMap.put(share, new BigDecimal(response.getShareVolume()));
+        });
+        return LiveValuesResponse.builder().liveValues(liveValuesMap).build();
     }
 
 
