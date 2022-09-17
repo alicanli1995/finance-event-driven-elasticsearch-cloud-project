@@ -26,7 +26,7 @@ public class FinanceStreamApp implements CommandLineRunner {
 
     private final StreamInitializer streamInitializer;
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         log.info("Initializing Kafka Stream");
         streamInitializer.init();
     }

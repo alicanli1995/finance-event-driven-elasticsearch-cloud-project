@@ -59,7 +59,6 @@ public class ElasticDocumentController {
         String username;
         if (principal instanceof UserDetails userName) {
              username = userName.getUsername();
-
         } else {
              username = principal.toString();
         }

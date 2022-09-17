@@ -1,6 +1,8 @@
 package com.microservices.demo.analytics.service.service.impl;
 
 import com.microservices.demo.analytics.service.converter.AvroToDbEntityModelTransformer;
+import com.microservices.demo.analytics.service.converter.EntityToResponseModelTransformer;
+import com.microservices.demo.analytics.service.model.AnalyticsResponseModel;
 import com.microservices.demo.analytics.service.repository.AnalyticsRepository;
 import com.microservices.demo.config.KafkaConfigData;
 import com.microservices.demo.kafka.admin.client.KafkaAdminClient;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -25,16 +28,19 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class AnalyticsKafkaConsumer implements KafkaConsumer<FinanceAnalyticsAvroModel> {
 
-
     private final KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
 
     private final KafkaAdminClient kafkaAdminClient;
 
     private final AvroToDbEntityModelTransformer avroToDbEntityModelTransformer;
 
+    private final EntityToResponseModelTransformer entityToResponseModelTransformer;
+
     private final AnalyticsRepository analyticsRepository;
 
     private final KafkaConfigData kafkaConfig;
+
+    private final RedisTemplate<String, AnalyticsResponseModel> redisTemplate;
 
     @EventListener
     public void onAppStarted(ApplicationStartedEvent event) {
@@ -52,6 +58,8 @@ public class AnalyticsKafkaConsumer implements KafkaConsumer<FinanceAnalyticsAvr
                         @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
         var entities = avroToDbEntityModelTransformer.getEntityModel(messages);
         analyticsRepository.batchPersist(entities);
+        entities.forEach(entity ->
+                redisTemplate.opsForValue().set(entity.getShareName(), entityToResponseModelTransformer.getResponseModelSingle(entity)));
         log.info("{} number of messages received from topic {}", messages.size(), kafkaConfig.getTopicName());
     }
 

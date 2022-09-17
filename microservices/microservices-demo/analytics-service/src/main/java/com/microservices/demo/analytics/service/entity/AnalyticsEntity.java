@@ -4,21 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "finance_analytics")
 public class AnalyticsEntity implements BaseEntity<UUID> {
 
@@ -35,7 +35,7 @@ public class AnalyticsEntity implements BaseEntity<UUID> {
     @Column(name = "share_volume")
     private String shareVolume;
 
-    @NotNull
+    @CreatedDate
     @Column(name = "record_date")
     private LocalDateTime recordDate;
 

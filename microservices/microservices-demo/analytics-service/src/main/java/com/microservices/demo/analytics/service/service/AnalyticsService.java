@@ -2,10 +2,14 @@ package com.microservices.demo.analytics.service.service;
 
 import com.microservices.demo.analytics.service.model.AnalyticsResponseModel;
 
-import java.util.Optional;
+import java.util.List;
+
 
 public interface AnalyticsService {
 
-    Optional<AnalyticsResponseModel> getShareNameAnalytics(String shareName);
+    List<AnalyticsResponseModel> getShareNameAnalytics(String shareName);
+
+    AnalyticsResponseModel getShareLiveDataOnCache(String shareName);
+    List<AnalyticsResponseModel> getAllCacheData();
 }
 
