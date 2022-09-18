@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
@@ -17,5 +17,5 @@ public class AnalyticsResponseModel implements Serializable {
     private UUID id;
     private String shareName;
     private String shareVolume;
-    private LocalDateTime recordTime;
+    private Instant recordTime;
 }

@@ -24,7 +24,7 @@ public class EntityToResponseModelTransformer {
                 .id(analyticsEntity.getId())
                 .shareName(analyticsEntity.getShareName())
                 .shareVolume(analyticsEntity.getShareVolume())
-                .recordTime(analyticsEntity.getRecordDate())
+                .recordTime(analyticsEntity.getCreatedDate())
                 .build();
     }
 }

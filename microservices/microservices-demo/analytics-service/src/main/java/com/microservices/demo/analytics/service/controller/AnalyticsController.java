@@ -40,11 +40,29 @@ public class AnalyticsController {
     }
 
     @GetMapping("get-share-live/{shareName}")
+    @Operation(summary = "Get share live data by shareName.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success.", content = {
+                    @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AnalyticsResponseModel.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Not found."),
+            @ApiResponse(responseCode = "500", description = "Unexpected error.")})
+    @ResponseBody
     public ResponseEntity<AnalyticsResponseModel> getAll(@PathVariable @NotEmpty String shareName) {
         return ResponseEntity.ok(analyticsService.getShareLiveDataOnCache(shareName));
     }
 
     @GetMapping("get-cached-data")
+    @Operation(summary = "Get all cached data.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success.", content = {
+                    @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AnalyticsResponseModel.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Not found."),
+            @ApiResponse(responseCode = "500", description = "Unexpected error.")})
+    @ResponseBody
     public ResponseEntity<List<AnalyticsResponseModel>> getAll() {
         return ResponseEntity.ok(analyticsService.getAllCacheData());
     }

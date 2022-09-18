@@ -7,9 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.IdGenerator;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 @Component
@@ -26,9 +23,9 @@ public class AvroToDbEntityModelTransformer {
                     return new AnalyticsEntity(
                             idGenerator.generateId()
                             , shareInformation[0].replaceAll(":", "")
-                            , shareInformation[1]
-                            , LocalDateTime.ofInstant(Instant.ofEpochMilli(avroModel.getCreatedAt()), ZoneOffset.UTC));
+                            , shareInformation[1]);
                 })
+                .peek(x -> x.setCreatedBy("SYSTEM"))
                 .toList();
     }
 

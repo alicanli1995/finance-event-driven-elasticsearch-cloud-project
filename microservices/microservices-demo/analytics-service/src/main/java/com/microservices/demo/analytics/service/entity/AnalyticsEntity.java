@@ -1,15 +1,17 @@
 package com.microservices.demo.analytics.service.entity;
 
+import com.microservices.demo.analytics.service.entity.base.AbstractAuditingEntity;
+import com.microservices.demo.analytics.service.entity.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -18,9 +20,8 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "finance_analytics")
-public class AnalyticsEntity implements BaseEntity<UUID> {
+public class AnalyticsEntity extends AbstractAuditingEntity implements BaseEntity<UUID> {
 
     @Id
     @NotNull
@@ -34,10 +35,6 @@ public class AnalyticsEntity implements BaseEntity<UUID> {
     @NotNull
     @Column(name = "share_volume")
     private String shareVolume;
-
-    @CreatedDate
-    @Column(name = "record_date")
-    private LocalDateTime recordDate;
 
     @Override
     public boolean equals(Object o) {

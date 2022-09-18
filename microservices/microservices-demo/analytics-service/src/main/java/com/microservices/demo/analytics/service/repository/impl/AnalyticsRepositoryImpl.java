@@ -1,6 +1,6 @@
 package com.microservices.demo.analytics.service.repository.impl;
 
-import com.microservices.demo.analytics.service.entity.BaseEntity;
+import com.microservices.demo.analytics.service.entity.base.BaseEntity;
 import com.microservices.demo.analytics.service.repository.AnalyticsCustomRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

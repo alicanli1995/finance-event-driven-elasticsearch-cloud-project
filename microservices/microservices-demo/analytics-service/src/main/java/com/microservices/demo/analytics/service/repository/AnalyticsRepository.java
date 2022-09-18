@@ -11,6 +11,6 @@ import java.util.UUID;
 
 public interface AnalyticsRepository extends JpaRepository<AnalyticsEntity, UUID>,AnalyticsCustomRepository<AnalyticsEntity, UUID> {
 
-    @Query(value = "select e from AnalyticsEntity e where e.shareName=:shareName order by e.recordDate")
-    List<AnalyticsEntity> getAnalyticsEntitiesByShareName(@Param("shareName") String shareName, Pageable pageable);
+    @Query(value = "select e from AnalyticsEntity e where e.shareName=:shareName")
+    List<AnalyticsEntity> getAnalyticsEntitiesByShareNameAndOrderByCreatedDate(@Param("shareName") String shareName, Pageable pageable);
 }

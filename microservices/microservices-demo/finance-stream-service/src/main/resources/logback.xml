@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-    <property name="DEV_HOME" value="./finance-stream-service/logs"/>
-    <property name="APP_NAME" value="finance-stream-service"/>
-
-    <include resource="logback-common.xml"/>
-
-</configuration>
